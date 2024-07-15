@@ -1,33 +1,26 @@
-name: your_app
-description: A new Flutter project.
+name: my_job_app
+description: A job app with a construction-themed design.
 
-publish_to: 'none' # Remove this line if you want to publish to pub.dev
+publish_to: 'none' 
 
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.18.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^2.11.0
-  firebase_auth: ^4.6.0
-  google_sign_in: ^6.1.4
-  flutter_riverpod: ^2.3.6
-  http: ^0.13.3
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  firebase_core: 1.0.0^
+  firebase_auth: 1.0.0^
+  cloud_firestore: 1.0.0^
+  provider: 1.0.0^
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
 
 flutter:
   uses-material-design: true
-
   assets:
-    - assets/logo.png
+    - assets/

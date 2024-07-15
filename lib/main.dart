@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'pages/home_page.dart';
-import 'pages/login_page.dart';
-import 'pages/register_page.dart';
-import 'pages/job_details_page.dart';
-import 'pages/profile_page.dart';
-import 'pages/settings_page.dart';
-import 'pages/apply_page.dart';
+import 'package:my_job_app/screens/home_screen.dart';
+import 'package:my_job_app/screens/login_screen.dart';
+import 'package:my_job_app/services/auth_service.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,20 +11,39 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'a Job',
-      theme: ThemeData(
-        primarySwatch: Colors.orange,
+    return MultiProvider(
+      providers: [
+        Provider<AuthService>(create: (_) => AuthService()),
+      ],
+      child: MaterialApp(
+        title: 'a Job',
+        theme: ThemeData(
+          primarySwatch: Colors.orange,
+          scaffoldBackgroundColor: Colors.white,
+          textTheme: TextTheme(
+            bodyText1: TextStyle(color: Colors.black),
+            bodyText2: TextStyle(color: Colors.black),
+          ),
+        ),
+        home: AuthWrapper(),
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => LoginPage(),
-        '/register': (context) => RegisterPage(),
-        '/home': (context) => HomePage(),
-        '/jobDetails': (context) => JobDetailsPage(),
-        '/profile': (context) => ProfilePage(),
-        '/settings': (context) => SettingsPage(),
-        '/apply': (context) => ApplyPage(),
+    );
+  }
+}
+
+class AuthWrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+    return StreamBuilder(
+      stream: authService.authStateChanges,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          var user = snapshot.data;
+          return user == null ? LoginScreen() : HomeScreen();
+        } else {
+          return CircularProgressIndicator();
+        }
       },
     );
   }
